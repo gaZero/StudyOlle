@@ -1,4 +1,3 @@
 # springboot
 
-## Chapter01
--> for springboot Repo 
+https://github.com/godndas2/readingList
