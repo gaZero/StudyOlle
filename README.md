@@ -1,3 +1,1 @@
-# springboot
-
-https://github.com/godndas2/readingList
+# 스터디올래
