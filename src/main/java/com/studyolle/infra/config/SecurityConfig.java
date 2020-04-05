@@ -29,15 +29,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/check-email-token",
                         "/email-login",
                         "/login-by-email",
-                        "/search/study")
+                        "/search/study",
+                        "/h2-console/**")
                 .permitAll()
                 .mvcMatchers(HttpMethod.GET, "/profile/*").permitAll()
                 .anyRequest().authenticated();
+
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
+
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring()
+         web.
+                ignoring()
                 .mvcMatchers("/node_modules/**")
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
