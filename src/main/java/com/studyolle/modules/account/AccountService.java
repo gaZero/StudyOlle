@@ -3,6 +3,7 @@ package com.studyolle.modules.account;
 import com.studyolle.infra.config.AppProperties;
 import com.studyolle.infra.mail.EmailMessage;
 import com.studyolle.infra.mail.EmailService;
+import com.studyolle.modules.account.form.Profile;
 import com.studyolle.modules.account.form.SignUpForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -78,6 +79,19 @@ public class AccountService implements UserDetailsService {
     public void completeSignUp(Account account) {
         account.completeSignUp();
         login(account);
+    }
+
+    public Account getAccount(String nickname) {
+        Account account = accountRepository.findByNickname(nickname);
+        if (account == null) {
+            throw new IllegalArgumentException(nickname + "에 해당하는 사용자가 없습니다.");
+        }
+        return account;
+    }
+
+    public void updateProfile(Account account, Profile profile) {
+        modelMapper.map(profile, account);
+        accountRepository.save(account);
     }
 
     @Transactional(readOnly = true)
