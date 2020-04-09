@@ -16,9 +16,7 @@ import java.util.List;
         attributeNodes = @NamedAttributeNode("enrollments")
 )
 @Entity
-@Getter
-@Setter
-@EqualsAndHashCode(of = "id")
+@Getter @Setter @EqualsAndHashCode(of = "id")
 public class Event {
 
     @Id @GeneratedValue
@@ -54,6 +52,13 @@ public class Event {
     @OneToMany(mappedBy = "event")
     @OrderBy("enrolledAt")
     private List<Enrollment> enrollments = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    private EventType eventType;
+
+    public long getNumberOfAcceptedEnrollments() {
+        return this.enrollments.stream().filter(Enrollment::isAccepted).count();
+    }
 
 
 }
