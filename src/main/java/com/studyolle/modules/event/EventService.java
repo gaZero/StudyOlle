@@ -21,6 +21,8 @@ public class EventService {
     private final ApplicationEventPublisher eventPublisher;
     private final ModelMapper modelMapper;
 
+    private final EnrollmentRepository enrollmentRepository;
+
     public Event createEvent(Event event, Study study, Account account) {
         event.setCreatedBy(account);
         event.setCreatedDateTime(LocalDateTime.now());
@@ -37,5 +39,30 @@ public class EventService {
                 "'" + event.getTitle() + "' 모임 정보를 수정했으니 확인하세요."));
     }
 
+    public void deleteEvent(Event event) {
+        eventRepository.delete(event);
+        eventPublisher.publishEvent(new StudyUpdateEvent(event.getStudy(),
+                "'" + event.getTitle() + "' 모임을 취소했습니다."));
+    }
+
+    public void newEnrollment(Event event, Account account) {
+        if (!enrollmentRepository.existsByEventAndAccount(event, account)) {
+            Enrollment enrollment = new Enrollment();
+            enrollment.setEnrolledAt(LocalDateTime.now());
+            enrollment.setAccepted(event.isAbleToAcceptWaitingEnrollment());
+            enrollment.setAccount(account);
+            event.addEnrollment(enrollment);
+            enrollmentRepository.save(enrollment);
+        }
+    }
+
+    public void cancelEnrollment(Event event, Account account) {
+        Enrollment enrollment = enrollmentRepository.findByEventAndAccount(event, account);
+        if (!enrollment.isAttended()) {
+            event.removeEnrollment(enrollment);
+            enrollmentRepository.delete(enrollment);
+            event.acceptNextWaitingEnrollment();
+        }
+    }
 
 }

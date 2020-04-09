@@ -12,4 +12,9 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
 
     @EntityGraph("Enrollment.withEventAndStudy")
     List<Enrollment> findByAccountAndAcceptedOrderByEnrolledAtDesc(Account account, boolean accepted);
+
+    boolean existsByEventAndAccount(Event event, Account account);
+
+    Enrollment findByEventAndAccount(Event event, Account account);
+
 }

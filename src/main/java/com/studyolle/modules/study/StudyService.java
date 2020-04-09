@@ -4,15 +4,12 @@ import com.studyolle.modules.account.Account;
 import com.studyolle.modules.study.event.StudyCreatedEvent;
 import com.studyolle.modules.study.event.StudyUpdateEvent;
 import com.studyolle.modules.study.form.StudyDescriptionForm;
-import com.studyolle.modules.study.form.StudyForm;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
 
 import static com.studyolle.modules.study.form.StudyForm.VALID_PATH_PATTERN;
 
@@ -131,18 +128,11 @@ public class StudyService {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
+    public Study getStudyToEnroll(String path) {
+        Study study = repository.findStudyOnlyByPath(path);
+        checkIfExistingStudy(path, study);
+        return study;
+    }
 
 
 }
