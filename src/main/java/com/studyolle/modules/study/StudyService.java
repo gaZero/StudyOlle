@@ -134,5 +134,8 @@ public class StudyService {
         return study;
     }
 
+    public void removeMember(Study study, Account account) {
+        study.removeMember(account);
+    }
 
 }

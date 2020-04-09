@@ -173,4 +173,24 @@ public class EventController {
         eventService.cancelCheckInEnrollment(enrollment);
         return "redirect:/study/" + study.getEncodedPath() + "/events/" + event.getId();
     }
+
+    @GetMapping("events/{eventId}/enrollments/{enrollmentId}/accept")
+    public String acceptEnrollment(@CurrentAccount Account account,
+                                   @PathVariable String path,
+                                   @PathVariable("eventId") Event event,
+                                   @PathVariable("enrollmentId") Enrollment enrollment) {
+        Study study = studyService.getStudyToUpdate(account, path);
+        eventService.acceptEnrollment(event, enrollment);
+        return "redirect:/study/" + study.getEncodedPath() + "/events/" + event.getId();
+    }
+
+    @GetMapping("/events/{eventId}/enrollments/{enrollmentId}/reject")
+    public String rejectEnrollment(@CurrentAccount Account account,
+                                   @PathVariable String path,
+                                   @PathVariable("eventId") Event event,
+                                   @PathVariable("enrollmentId") Enrollment enrollment) {
+        Study study = studyService.getStudyToUpdate(account, path);
+        eventService.rejectEnrollment(event, enrollment);
+        return "redirect:/study/" + study.getEncodedPath() + "/events/" + event.getId();
+    }
 }

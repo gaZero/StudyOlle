@@ -1,6 +1,8 @@
 package com.studyolle.modules.event;
 
 import com.studyolle.modules.account.Account;
+import com.studyolle.modules.event.event.EnrollmentAcceptedEvent;
+import com.studyolle.modules.event.event.EnrollmentRejectedEvent;
 import com.studyolle.modules.event.form.EventForm;
 import com.studyolle.modules.study.Study;
 import com.studyolle.modules.study.event.StudyUpdateEvent;
@@ -72,6 +74,17 @@ public class EventService {
     public void cancelCheckInEnrollment(Enrollment enrollment) {
         enrollment.setAttended(false);
     }
+
+    public void acceptEnrollment(Event event, Enrollment enrollment) {
+        event.accept(enrollment);
+        eventPublisher.publishEvent(new EnrollmentAcceptedEvent(enrollment));
+    }
+
+    public void rejectEnrollment(Event event, Enrollment enrollment) {
+        event.reject(enrollment);
+        eventPublisher.publishEvent(new EnrollmentRejectedEvent(enrollment));
+    }
+
 
 
 }

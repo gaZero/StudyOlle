@@ -79,4 +79,11 @@ public class StudyController {
         studyService.addMember(study, account);
         return "redirect:/study/" + study.getEncodedPath() + "/members";
     }
+
+    @GetMapping("/study/{path}/leave")
+    public String leaveStudy(@CurrentAccount Account account, @PathVariable String path) {
+        Study study = studyRepository.findStudyWithMembersByPath(path);
+        studyService.removeMember(study, account);
+        return "redirect:/study/" + study.getEncodedPath() + "/members";
+    }
 }
