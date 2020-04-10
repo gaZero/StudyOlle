@@ -3,6 +3,7 @@ package com.studyolle.modules.account;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.studyolle.modules.account.form.NicknameForm;
+import com.studyolle.modules.account.form.Notifications;
 import com.studyolle.modules.account.form.PasswordForm;
 import com.studyolle.modules.account.form.Profile;
 import com.studyolle.modules.account.validator.NicknameValidator;
@@ -45,6 +46,7 @@ public class SettingsController {
     static final String ACCOUNT = "/account";
     static final String TAGS = "/tags";
     static final String ZONES = "/zones";
+    static final String NOTIFICATIONS = "/notifications";
 
     private final AccountService accountService;
     private final NicknameValidator nicknameValidator;
@@ -202,7 +204,27 @@ public class SettingsController {
         return "redirect:/" + SETTINGS + ACCOUNT;
     }
 
+    @GetMapping(NOTIFICATIONS)
+    public String updateNotificationsForm(@CurrentAccount Account account, Model model) {
+        model.addAttribute(account);
+        model.addAttribute(modelMapper.map(account, Notifications.class));
+        return SETTINGS + NOTIFICATIONS;
+    }
 
+    @PostMapping(NOTIFICATIONS)
+    public String updateNotifications(@CurrentAccount Account account,
+                                      @Valid Notifications notifications,
+                                      Errors errors,
+                                      Model model,
+                                      RedirectAttributes attributes) {
+        if (errors.hasErrors()) {
+            model.addAttribute(account);
+            return SETTINGS + NOTIFICATIONS;
+        }
 
+        accountService.updateNotifications(account, notifications);
+        attributes.addFlashAttribute("message", "알림 설정을 변경했습니다.");
+        return "redirect:/" + SETTINGS + NOTIFICATIONS;
+    }
 
 }

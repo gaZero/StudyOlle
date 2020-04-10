@@ -4,6 +4,8 @@ import com.studyolle.modules.account.Account;
 import com.studyolle.modules.study.event.StudyCreatedEvent;
 import com.studyolle.modules.study.event.StudyUpdateEvent;
 import com.studyolle.modules.study.form.StudyDescriptionForm;
+import com.studyolle.modules.tag.Tag;
+import com.studyolle.modules.zone.Zone;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
@@ -138,4 +140,33 @@ public class StudyService {
         study.removeMember(account);
     }
 
+    public Study getStudyToUpdateZone(Account account, String path) {
+        Study study = repository.findStudyWithZonesByPath(path);
+        checkIfExistingStudy(path, study);
+        checkIfManager(account, study);
+        return study;
+    }
+
+    public Study getStudyToUpdateTag(Account account, String path) {
+        Study study = repository.findStudyWithTagsByPath(path);
+        checkIfExistingStudy(path, study);
+        checkIfManager(account, study);
+        return study;
+    }
+
+    public void addZone(Study study, Zone zone) {
+        study.getZones().add(zone);
+    }
+
+    public void removeZone(Study study, Zone zone) {
+        study.getZones().remove(zone);
+    }
+
+    public void addTag(Study study, Tag tag) {
+        study.getTags().add(tag);
+    }
+
+    public void removeTag(Study study, Tag tag) {
+        study.getTags().remove(tag);
+    }
 }

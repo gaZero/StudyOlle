@@ -3,6 +3,7 @@ package com.studyolle.modules.account;
 import com.studyolle.infra.config.AppProperties;
 import com.studyolle.infra.mail.EmailMessage;
 import com.studyolle.infra.mail.EmailService;
+import com.studyolle.modules.account.form.Notifications;
 import com.studyolle.modules.account.form.Profile;
 import com.studyolle.modules.account.form.SignUpForm;
 import com.studyolle.modules.tag.Tag;
@@ -157,6 +158,11 @@ public class AccountService implements UserDetailsService {
         account.setNickname(nickname);
         accountRepository.save(account);
         login(account);
+    }
+
+    public void updateNotifications(Account account, Notifications notifications) {
+        modelMapper.map(notifications, account);
+        accountRepository.save(account);
     }
 
     @Transactional(readOnly = true)

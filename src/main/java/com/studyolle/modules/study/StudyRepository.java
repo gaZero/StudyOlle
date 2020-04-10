@@ -29,4 +29,11 @@ public interface StudyRepository extends JpaRepository<Study, Long>, StudyReposi
     List<Study> findFirst5ByManagersContainingAndClosedOrderByPublishedDateTimeDesc(Account account, boolean closed);
 
     List<Study> findFirst5ByMembersContainingAndClosedOrderByPublishedDateTimeDesc(Account account, boolean closed);
+
+    @EntityGraph(attributePaths = {"zones", "managers"})
+    Study findStudyWithZonesByPath(String path);
+
+    @EntityGraph(attributePaths = {"tags", "managers"})
+    Study findStudyWithTagsByPath(String path);
+
 }
