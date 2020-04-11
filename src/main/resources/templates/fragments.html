@@ -200,8 +200,8 @@
 
 <script type="application/javascript" th:inline="javascript" th:fragment="ajax-csrf-header">
     $(function() {
-        var csrfToken = [[${_csrf.token}]];
-        var csrfHeader = [[${_csrf.headerName}]];
+        var csrfToken = /*[[${_csrf.token}]]*/null;
+        var csrfHeader = /*[[${_csrf.token}]]*/null;
         $(document).ajaxSend(function (e, xhr, options) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         });

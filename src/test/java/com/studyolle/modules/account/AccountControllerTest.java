@@ -1,4 +1,4 @@
-package com.studyolle.modules;
+package com.studyolle.modules.account;
 
 import com.studyolle.infra.MockMvcTest;
 import com.studyolle.infra.mail.EmailMessage;
