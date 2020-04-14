@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class StudySettingsController {
 
-    private final StudyRepository studyRepository;
     private final TagRepository tagRepository;
     private final ZoneRepository zoneRepository;
     private final StudyService studyService;
