@@ -6,6 +6,7 @@
 4. jdk 11
 5. ThymeLeaf
 6. Junit4, 5
+7. 
 ## DB
 Mysql 8.x  
 H2
