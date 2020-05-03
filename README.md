@@ -8,8 +8,8 @@
 6. Junit4, 5
 7. SpringBoot
 ## DB
-Mysql 8.x  
-H2
+- Mysql 8.x  
+- H2
 ## 회원가입
 - 이메일 인증
 - 이메일 인증 후 로그인
