@@ -1,6 +1,6 @@
 # 스터디 모집 웹 서비스 📚💻  
 ## 사용 기술   
-1. Spring Security 
+1. Spring Security  
 2. Spring Data Jpa
 3. Query Dsl
 4. jdk 11
